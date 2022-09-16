@@ -27,15 +27,13 @@ def download_youtube_video_as_mp3():
 
 def download_youtube_video_as_mp4():
     try:
-        yt = YouTube(str(input("Enter URL of YouTube Video link: \n>> ")))
-        # yt = YouTube(https://www.youtube.com/watch?v=GXkYC8zn2Ss)
-
-        video = yt.streams.filter().first()
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         destination = os.path.join(base_dir + "/song")
 
-        out_file = video.download(output_path=destination)
-        filename = out_file.split("/")
+        yt = input("Enter YouTube Video Link: ")
+        video_instance = pytube.YouTube(yt)
+        stream = video_instance.streams.get_highest_resolution()
+        video_download = stream.download(destination)
         print("Video download has been completed successfully")
     except Exception as err:
         print(err)
